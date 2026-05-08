@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<h1>Biblioteca Digital</h1>
+
+<h2>Inicio de sesión exitoso</h2>
+
+<p>
+    Bienvenido al sistema de biblioteca.
+</p>
+
+<form th:action="@{/logout}" method="post">
+
+    <button type="submit">
+        Cerrar sesión
+    </button>
+
+</form>
+
+</body>
+</html>
