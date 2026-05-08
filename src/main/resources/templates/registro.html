@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registro Biblioteca</title>
+</head>
+<body>
+
+<h1>Registro de Usuario</h1>
+
+<form th:action="@{/registro}"
+      th:object="${user}"
+      method="post">
+    <input type="hidden"
+           th:name="${_csrf.parameterName}"
+           th:value="${_csrf.token}">
+
+    <label>Nombre:</label>
+    <input type="text"
+           th:field="*{name}"
+           required>
+
+    <br><br>
+
+    <label>Correo:</label>
+    <input type="email"
+           th:field="*{email}"
+           required>
+
+    <br><br>
+
+    <label>Contrasena:</label>
+    <input type="password"
+           th:field="*{password}"
+           required>
+
+    <br><br>
+
+    <button type="submit">
+        Registrarse
+    </button>
+
+</form>
+
+<br>
+
+<a th:href="@{/login}">
+    Volver al login
+</a>
+
+</body>
+</html>

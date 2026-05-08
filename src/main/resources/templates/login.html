@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Biblioteca</title>
+</head>
+<body>
+
+<h1>Biblioteca Digital</h1>
+
+<h2>Iniciar Sesion</h2>
+
+<form th:action="@{/login}" method="post">
+    <input type="hidden"
+           th:name="${_csrf.parameterName}"
+           th:value="${_csrf.token}">
+
+    <label>Correo:</label>
+    <input type="email"
+           name="username"
+           required>
+
+    <br><br>
+
+    <label>Contrasena:</label>
+    <input type="password"
+           name="password"
+           required>
+
+    <br><br>
+
+    <button type="submit">
+        Ingresar
+    </button>
+
+</form>
+
+<br>
+
+<p>
+    No tienes cuenta?
+    <a th:href="@{/registro}">
+        Registrarse
+    </a>
+</p>
+
+<div th:if="${param.error}">
+    <p style="color:red;">
+        Correo o contrasena incorrectos
+    </p>
+</div>
+
+<div th:if="${param.logout}">
+    <p style="color:green;">
+        Sesion cerrada correctamente
+    </p>
+</div>
+
+</body>
+</html>
