@@ -38,7 +38,9 @@ public class SecurityConfig {
                                 "/",
                                 "/login",
                                 "/login.html",
-                                "/registro"
+                                "/registro",
+                                "/api/**",
+                                "/h2-console/**"
                         ).permitAll()
 
                         .anyRequest().authenticated()
@@ -53,6 +55,14 @@ public class SecurityConfig {
                 .logout(logout -> logout
                         .logoutSuccessUrl("/login?logout")
                         .permitAll()
+                )
+
+                .csrf(csrf -> csrf
+                        .ignoringRequestMatchers("/api/**", "/h2-console/**")
+                )
+
+                .headers(headers -> headers
+                        .frameOptions(frame -> frame.sameOrigin())
                 );
 
         return http.build();

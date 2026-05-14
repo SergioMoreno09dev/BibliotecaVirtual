@@ -1,6 +1,8 @@
 package com.universidad.biblio.controller;
 
 import com.universidad.biblio.model.User;
+import com.universidad.biblio.service.BookService;
+import com.universidad.biblio.service.LoanService;
 import com.universidad.biblio.service.UserServi;
 
 import org.springframework.stereotype.Controller;
@@ -11,9 +13,13 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final UserServi service;
+    private final BookService bookService;
+    private final LoanService loanService;
 
-    public AuthController(UserServi service) {
+    public AuthController(UserServi service, BookService bookService, LoanService loanService) {
         this.service = service;
+        this.bookService = bookService;
+        this.loanService = loanService;
     }
 
     @GetMapping("/")
@@ -48,7 +54,12 @@ public class AuthController {
     }
 
     @GetMapping("/dashboard")
-    public String dashboard() {
+    public String dashboard(Model model) {
+        loanService.markExpiredLoans();
+        model.addAttribute("totalBooks", bookService.count());
+        model.addAttribute("activeLoans", loanService.countActive());
+        model.addAttribute("totalUsers", service.count());
+        model.addAttribute("expiredLoans", loanService.countExpired());
         return "dashboard";
     }
 }
