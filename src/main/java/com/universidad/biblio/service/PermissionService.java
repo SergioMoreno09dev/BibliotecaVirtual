@@ -1,0 +1,33 @@
+package com.universidad.biblio.service;
+
+import com.universidad.biblio.model.Permission;
+import com.universidad.biblio.repository.PermissionRepository;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class PermissionService {
+    private final PermissionRepository repository;
+
+    public PermissionService(PermissionRepository repository) {
+        this.repository = repository;
+    }
+
+    public List<Permission> list() {
+        return repository.findAll();
+    }
+
+    public List<Permission> byRole(String role) {
+        return repository.findByRole(role);
+    }
+
+    public Permission save(Permission permission) {
+        return repository.save(permission);
+    }
+
+    public boolean checkPermission(String role, String permissionName) {
+        return repository.findByRole(role).stream()
+                .anyMatch(permission -> permission.getName().equalsIgnoreCase(permissionName));
+    }
+}
