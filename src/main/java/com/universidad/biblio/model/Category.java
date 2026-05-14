@@ -1,10 +1,23 @@
 package com.universidad.biblio.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Transient;
+
 import java.util.Objects;
 
+@Entity
 public class Category {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String name;
     private String description;
+
+    @Transient
     private Book book;
 
     public Category() {
@@ -14,6 +27,14 @@ public class Category {
         this.name = name;
         this.description = description;
         this.book = book;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {

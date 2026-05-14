@@ -1,13 +1,34 @@
 package com.universidad.biblio.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+
 import java.util.Date;
 import java.util.Objects;
 
+@Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class ExportRequest {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String format;
+
+    @Temporal(TemporalType.TIMESTAMP)
     private Date exportDate;
     private String appliedFilters;
+
+    @ManyToOne
     private User user;
+
+    @ManyToOne
     private Report report;
 
     public ExportRequest() {
@@ -19,6 +40,14 @@ public class ExportRequest {
         this.appliedFilters = appliedFilters;
         this.user = user;
         this.report = report;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFormat() {

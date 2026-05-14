@@ -1,13 +1,37 @@
 package com.universidad.biblio.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+
 import java.util.Date;
 import java.util.Objects;
 
+@Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Loan {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne
     private User user;
+
+    @ManyToOne
     private Book book;
+
+    @Temporal(TemporalType.DATE)
     private Date loanDate;
+
+    @Temporal(TemporalType.DATE)
     private Date returnDate;
+
+    private String status = "ACTIVO";
 
     public Loan() {
     }
@@ -17,6 +41,14 @@ public class Loan {
         this.book = book;
         this.loanDate = loanDate;
         this.returnDate = returnDate;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public User getUser() {
@@ -49,6 +81,14 @@ public class Loan {
 
     public void setReturnDate(Date returnDate) {
         this.returnDate = returnDate;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override

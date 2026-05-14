@@ -1,11 +1,30 @@
 package com.universidad.biblio.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+
 import java.util.Date;
 
+@Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class AuditLog {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String action;
+
+    @Temporal(TemporalType.TIMESTAMP)
     private Date actionDate;
     private String description;
+
+    @ManyToOne
     private User user;
 
     public AuditLog() {
@@ -16,6 +35,14 @@ public class AuditLog {
         this.actionDate = actionDate;
         this.description = description;
         this.user = user;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getAction() {
