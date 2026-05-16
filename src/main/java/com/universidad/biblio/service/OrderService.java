@@ -29,6 +29,10 @@ public class OrderService {
         return orderRepository.findAll();
     }
 
+    public List<Order> byUser(int userId) {
+        return orderRepository.findByUserId(userId);
+    }
+
     public Order find(Long id) {
         return orderRepository.findById(id).orElseThrow(() -> new RuntimeException("Reserva no encontrada"));
     }

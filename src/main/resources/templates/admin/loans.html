@@ -173,10 +173,25 @@
 
                             </form>
 
-                            <a class="btn btn-sm btn-outline-primary"
-                               th:href="@{/admin/loans/extend(id=${loan.id})}">
-                                <i class="bi bi-calendar-plus"></i>
-                            </a>
+                            <form class="d-inline"
+                                  th:action="@{/admin/loans/extend}"
+                                  method="post">
+
+                                <input type="hidden"
+                                       th:if="${_csrf != null}"
+                                       th:name="${_csrf.parameterName}"
+                                       th:value="${_csrf.token}">
+
+                                <input type="hidden"
+                                       name="id"
+                                       th:value="${loan.id}">
+
+                                <button class="btn btn-sm btn-outline-primary"
+                                        type="submit">
+                                    <i class="bi bi-calendar-plus"></i>
+                                </button>
+
+                            </form>
 
                         </td>
 
