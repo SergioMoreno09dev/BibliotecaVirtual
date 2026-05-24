@@ -6,6 +6,8 @@ import com.universidad.biblio.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserServi {
 
@@ -32,8 +34,37 @@ public class UserServi {
                 encoder.encode(user.getPassword())
         );
 
-        user.setRol("ROLE_USER");
+        if (user.getRol() == null || user.getRol().isBlank()) {
+            user.setRol("LECTOR");
+        }
 
         repo.save(user);
+    }
+
+    public List<User> list() {
+        return repo.findAll();
+    }
+
+    public User find(int id) {
+        return repo.findById(id).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+    }
+
+    public User update(int id, User user) {
+        User current = find(id);
+        current.setName(user.getName());
+        current.setEmail(user.getEmail());
+        current.setRol(user.getRol());
+        if (user.getPassword() != null && !user.getPassword().isBlank()) {
+            current.setPassword(encoder.encode(user.getPassword()));
+        }
+        return repo.save(current);
+    }
+
+    public void delete(int id) {
+        repo.delete(find(id));
+    }
+
+    public long count() {
+        return repo.count();
     }
 }

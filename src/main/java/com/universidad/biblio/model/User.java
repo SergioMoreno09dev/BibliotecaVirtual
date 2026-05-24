@@ -1,5 +1,6 @@
 package com.universidad.biblio.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,7 +15,7 @@ import java.util.Objects;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     private String name;
 
@@ -22,6 +23,7 @@ public class User {
     private String email;
 
     @Column(nullable = false)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @Column(nullable = false)
@@ -30,7 +32,7 @@ public class User {
     public User() {
     }
 
-    public User(int id,String name, String email, String password, String rol) {
+    public User(Integer id,String name, String email, String password, String rol) {
         this.id= id;
         this.name = name;
         this.email = email;
@@ -38,11 +40,11 @@ public class User {
         this.rol = rol;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -92,7 +94,7 @@ public class User {
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof User user)) return false;
-        return id == user.id;
+        return Objects.equals(id, user.id);
     }
 
     @Override

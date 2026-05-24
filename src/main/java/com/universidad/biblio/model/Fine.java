@@ -1,13 +1,34 @@
 package com.universidad.biblio.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+
 import java.util.Date;
 import java.util.Objects;
 
+@Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Fine {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private double amount;
+
+    @Temporal(TemporalType.DATE)
     private Date generateDate;
     private String status;
+
+    @ManyToOne
     private Loan loan;
+
+    @ManyToOne
     private User user;
 
     public Fine() {
@@ -19,6 +40,14 @@ public class Fine {
         this.status = status;
         this.loan = loan;
         this.user = user;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public double getAmount() {

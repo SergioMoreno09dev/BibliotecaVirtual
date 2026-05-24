@@ -1,13 +1,37 @@
 package com.universidad.biblio.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+
 import java.util.Date;
 import java.util.Objects;
 
+@Entity
+@Table(name = "library_orders")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Order {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Temporal(TemporalType.DATE)
     private Date orderDate;
     private String status;
+
+    @Temporal(TemporalType.DATE)
     private Date expirationDate;
+
+    @ManyToOne
     private User user;
+
+    @ManyToOne
     private Book book;
 
     public Order() {
@@ -19,6 +43,14 @@ public class Order {
         this.expirationDate = expirationDate;
         this.user = user;
         this.book = book;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Date getOrderDate() {
