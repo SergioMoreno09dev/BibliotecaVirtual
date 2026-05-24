@@ -29,7 +29,7 @@ public class AuthController {
 
     @GetMapping("/login")
     public String login() {
-        return "login";
+        return "auth/login";
     }
 
     @GetMapping("/login.html")
@@ -42,7 +42,7 @@ public class AuthController {
 
         model.addAttribute("user", new User());
 
-        return "registro";
+        return "auth/registro";
     }
 
     @PostMapping("/registro")
